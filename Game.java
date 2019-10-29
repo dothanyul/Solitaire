@@ -3,17 +3,6 @@ import java.util.ArrayList;
 import java.util.Scanner;
 import java.util.Stack;
 
-//import javax.imageio.ImageIO;
-
-//import javafx.application.Application;
-//import javafx.scene.Parent;
-//import javafx.scene.Scene;
-//import javafx.scene.layout.BorderPane;
-//import javafx.scene.layout.Pane;
-//import javafx.scene.layout.StackPane;
-//import javafx.stage.Stage;
-//import javafx.stage.WindowEvent;
-
 public class Game {
 
 	ArrayList<Card>[] board;  // hold the seven piles of cards that make up the game
@@ -165,11 +154,11 @@ public class Game {
 			}
 		} else {
 			Card moveTo = board[to].get(board[to].size()-1);
-			if (move.black() == moveTo.black()) {  // check if the colors alternate
-				throw new IOException(" Colors must alternate in piles.");
-			}
 			if (move.number() != moveTo.number()-1) {  // check if the numbers are in sequence
 				throw new IOException(" Cards in piles must be in sequence.");
+			}
+			if (move.black() == moveTo.black()) {  // check if the colors alternate
+				throw new IOException(" Colors must alternate in piles.");
 			}
 		}
 		// at this point we know the move is legal
@@ -196,11 +185,11 @@ public class Game {
 			}
 		} else {
 			Card moveTo = board[to].get(board[to].size()-1);
-			if (move.black() == moveTo.black()) {  // check if the colors alternate
-				throw new IOException(" Colors must alternate in piles.");
-			}
 			if (move.number() != moveTo.number()-1) {  // check if the numbers are in sequence
 				throw new IOException(" Cards in piles must be in sequence.");
+			}
+			if (move.black() == moveTo.black()) {  // check if the colors alternate
+				throw new IOException(" Colors must alternate in piles.");
 			}
 		} // at this point the move is legal
 		board[to].add(flip.top());
@@ -265,490 +254,50 @@ public class Game {
 		}
 	}
 
-	/*
-	 * animate some celebratory ASCII fireworks
-	 */
-	public void celebrate() throws InterruptedException {
-		String[] frames = new String[21];
-		frames[0] = "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n          *";
-		frames[1] = "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n          *\n          *\n          *\n          *";
-		frames[2] = "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n          *\n          *\n          *\n          *\n          *\n          *\n          *\n          *\n          *";
-		frames[3] = "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n          *\n          *\n          *\n          *\n          *\n          *\n          *\n          *\n          *\n          *\n          *\n          *\n          *\n          *\n          *\n          *\n          *";
-		frames[4] = "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n"
-				+   "\n        _\\ /_"
-				+   "\n         / \\"
-				+   "\n          *"
-				+   "\n          *"
-				+   "\n          *"
-				+   "\n          *"
-				+   "\n          *"
-				+   "\n          *"
-				+   "\n          *"
-				+   "\n          *"
-				+   "\n          *"
-				+   "\n          *"
-				+   "\n          *"
-				+   "\n          *"
-				+   "\n          *"
-				+   "\n          *"
-				+   "\n          *"
-				+   "\n          *"
-				+   "\n          *"
-				+   "\n          *"
-				+   "\n          *"
-				+   "\n          *"
-				+   "\n          *"
-				+   "\n          *";
-		frames[5] = "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n"
-				+   "\n        *   *"
-				+   "\n         \\ /"
-				+   "\n      * - x - *"
-				+   "\n         / \\"
-				+   "\n        *   *"
-				+   "\n          *"
-				+   "\n          *"
-				+   "\n          *"
-				+   "\n          *"
-				+   "\n          *"
-				+   "\n          *"
-				+   "\n          *"
-				+   "\n          *"
-				+   "\n          *"
-				+   "\n          *"
-				+   "\n          *"
-				+   "\n          *"
-				+   "\n          *"
-				+   "\n          *"
-				+   "\n          *"
-				+   "\n          *"
-				+   "\n          *"
-				+   "\n          *"
-				+   "\n          *"
-				+   "\n          *                *"
-				+   "\n          *                *";
-		frames[6] = "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n"
-				+   "\n       *.   .*"
-				+   "\n     *   \\ /   *"
-				+   "\n      . - x - ."
-				+   "\n     *   / \\   *"
-				+   "\n       *     *"
-				+   "\n          *"
-				+   "\n          *"
-				+   "\n          *"
-				+   "\n          *"
-				+   "\n          *"
-				+   "\n          *"
-				+   "\n          *"
-				+   "\n          *"
-				+   "\n          *"
-				+   "\n          *"
-				+   "\n          *"
-				+   "\n          *"
-				+   "\n          *"
-				+   "\n          *"
-				+   "\n          *                 *"
-				+   "\n          *                *"
-				+   "\n          *                *"
-				+   "\n          *                *"
-				+   "\n          *                *"
-				+   "\n          *                *"
-				+   "\n          *                *";
-		frames[7] = "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n"
-				+   "\n       * . . *"
-				+   "\n    *.  \\   /  .*"
-				+   "\n   *  \\  *    /  *"
-				+   "\n   *  . - x - .  *"
-				+   "\n   * : /  .  \\ : *"
-				+   "\n    *   /   \\   *"
-				+   "\n       *     *"
-				+   "\n          *"
-				+   "\n          *"
-				+   "\n          *"
-				+   "\n          *"
-				+   "\n          *"
-				+   "\n          *                   *"
-				+   "\n          *                  *"
-				+   "\n          *                  *"
-				+   "\n          *                 *"
-				+   "\n          *                 *"
-				+   "\n          *                 *"
-				+   "\n          *                 *"
-				+   "\n          *                 *"
-				+   "\n          *                *"
-				+   "\n          *                *"
-				+   "\n          *                *"
-				+   "\n          *                *"
-				+   "\n          *                *"
-				+   "\n          *                *"
-				+   "\n          *                *";
-		frames[8] = "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n"
-				+   "\n       * . . *"
-				+   "\n   *.  \\     /  .*"
-				+   "\n  *  \\    *     /  *"
-				+   "\n  *  . -     - .   *"
-				+   "\n  *   :   .    :   *"
-				+   "\n   *   .     .    *"
-				+   "\n   *    /   \\    *"
-				+   "\n       *     *                  \\ /"
-				+   "\n          *                    - * -"
-				+   "\n                                / \\"
-				+   "\n          *                    *"
-				+   "\n                              *"
-				+   "\n          *                   *"
-				+   "\n                             *"
-				+   "\n          *                  *"
-				+   "\n                            *"
-				+   "\n          *                 *"
-				+   "\n                            *"
-				+   "\n          *                 *"
-				+   "\n                            *"
-				+   "\n          *                *"
-				+   "\n                           *"
-				+   "\n          *                *"
-				+   "\n                           *"
-				+   "\n          *                *"
-				+   "\n                           *"
-				+   "\n          *                *";
-		frames[9] = "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n"
-				+   "\n        .   ."
-				+   "\n    * .       . *"
-				+   "\n  *  \\    *    /  *"
-				+   "\n *  .  -     -  .  *"
-				+   "\n*    :    .    :    *"
-				+   "\n*     .       .     *"
-				+   "\n *     /     \\     *         *   *"
-				+   "\n   *      *      *          *  \\ /  *"
-				+   "\n     *         *           <  - * -  >"
-				+   "\n                            *  / \\  *"
-				+   "\n          *                   *   *"
-				+   "\n                              *"
-				+   "\n          *                   *"
-				+   "\n                             *"
-				+   "\n          *                  *"
-				+   "\n                            *"
-				+   "\n          *                 *"
-				+   "\n                            *"
-				+   "\n          *                 *"
-				+   "\n                            *"
-				+   "\n          *                *"
-				+   "\n                           *"
-				+   "\n          *                *"
-				+   "\n                           *"
-				+   "\n          *                *"
-				+   "\n                           *"
-				+   "\n          *                *";
-		frames[10] = "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n"
-				+   "\n        .   ."
-				+   "\n    * .       . *"
-				+   "\n  *  '    .    '  *"
-				+   "\n*     .       .     *"
-				+   "\n*   :  -  .  -  :   *"
-				+   "\n*     .       .     *         .   ."
-				+   "\n *        *        *        *       *"
-				+   "\n   *  '       '  *        *   \\   /   *"
-				+   "\n     *         *         <  : - * - :  >"
-				+   "\n                          *   /   \\   *"
-				+   "\n          *                *    .    *"
-				+   "\n                              '   '"
-				+   "\n                              *"
-				+   "\n                              "
-				+   "\n          *                  *"
-				+   "\n                             "
-				+   "\n                            *"
-				+   "\n                             "
-				+   "\n          *                 *"
-				+   "\n                             "
-				+   "\n                           *"
-				+   "\n                            "
-				+   "\n          *                *"
-				+   "\n                            "
-				+   "\n                  *        *"
-				+   "\n                  *              *"
-				+   "\n          *       *        *     *";
-		frames[11] = "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n"
-				+   "\n      * .   . *"
-				+   "\n  *  '    .    '  *"
-				+   "\n *    .       .    *"
-				+   "\n    :     .     :    "
-				+   "\n'     .       .     '        *     *"
-				+   "\n*         *         *     * '   '   ' *"
-				+   "\n  *   '       '   *      *    \\   /    *"
-				+   "\n     *         *        *   : - * - :   *"
-				+   "\n                        *   /  / \\  \\   *"
-				+   "\n          *              *    .   .    *"
-				+   "\n                            *   '   *"
-				+   "\n                              *   *"
-				+   "\n                              "
-				+   "\n          *                  *"
-				+   "\n                 *           "
-				+   "\n                 *          *"
-				+   "\n                 *           "
-				+   "\n          *       *         *"
-				+   "\n                  *             *"
-				+   "\n                  *        *    *"
-				+   "\n                  *              *"
-				+   "\n          *       *        *     *"
-				+   "\n                  *              *"
-				+   "\n                  *        *     *"
-				+   "\n                  *              *"
-				+   "\n          *       *        *     *";
-		frames[12] = "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n"
-				+   "\n        .   ."
-				+   "\n     '    .    '"
-				+   "\n    .           ."
-				+   "\n   .   :  .  :   ."
-				+   "\n    .           .            *  '  *"
-				+   "\n        .   .* *         *  '  ' '  '  *"
-				+   "\n           * *** *      * '  \\  '  /  ' *"
-				+   "\n           * *** *     *   :  - * -  :   *"
-				+   "\n             * *       * '  /  / \\  \\  ' *"
-				+   "\n               *        *  '  .   .  '  *"
-				+   "\n                *         * ' / '  '  *"
-				+   "\n                *           X  ' '  *"
-				+   "\n                *         /  *\\"
-				+   "\n                 *           **"
-				+   "\n                 *            *"
-				+   "\n                 *             *"
-				+   "\n                 *             *"
-				+   "\n                  *         *   *"
-				+   "\n                  *             *"
-				+   "\n                  *             *"
-				+   "\n                  *              *"
-				+   "\n                  *        *     *"
-				+   "\n                  *              *"
-				+   "\n                  *              *"
-				+   "\n                  *              *"
-				+   "\n                  *        *     *";
-		frames[13] = "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n"
-				+   "\n        .    "
-				+   "\n          ."
-				+   "\n    .           ."
-				+   "\n          .   ."
-				+   "\n    .      * * * *            *  '  *"
-				+   "\n         *  * * *  *      *  '  ' '  '  *"
-				+   "\n        * *  ***  * *    * '  \\  '  /  ' *"
-				+   "\n        * *  ***  * *   *   :  - * -  :   *"
-				+   "\n         *  * * *  *    * '  /  / \\  \\  ' *"
-				+   "\n           * * * *      * *'  *   .  '  *"
-				+   "\n                *       * \\ ' / *  '  *"
-				+   "\n                *      * >  X  < *  *"
-				+   "\n                *       * /  *\\ *"
-				+   "\n                 *        x  **"
-				+   "\n                 *            *"
-				+   "\n                 *             *"
-				+   "\n                 *             *"
-				+   "\n                  *         *   *"
-				+   "\n                  *             *"
-				+   "\n                  *             *"
-				+   "\n                  *              *"
-				+   "\n                  *        *     *"
-				+   "\n                  *              *"
-				+   "\n                  *              *"
-				+   "\n        *         *              *"
-				+   "\n        *         *        *     *";
-		frames[14] = "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n"
-				+   "\n        .    "
-				+   "\n          ."
-				+   "\n    .           ."
-				+   "\n          .  * *"
-				+   "\n    .    *    *    *          *    *"
-				+   "\n        *   *   *   *     *  '      '  *"
-				+   "\n       *  *  ***  *  *   * '  \\  '  /  ' *"
-				+   "\n       *  *  ***  *  *  *   :    -    :   *"
-				+   "\n        *   *   *   *   * '   /  .  \\   ' *"
-				+   "\n         *    *    *    * *\\ /*          *"
-				+   "\n            *   *       \\ \\ ' / /   '  *"
-				+   "\n                *      * >  X  < *  *"
-				+   "\n                        / / . \\ \\"
-				+   "\n                 *         / \\*"
-				+   "\n                *             *"
-				+   "\n               * *             *"
-				+   "\n              *                *"
-				+   "\n             *    *         *   *"
-				+   "\n            *                   *"
-				+   "\n           *      *             *"
-				+   "\n          *                      *"
-				+   "\n          *       *        *     *"
-				+   "\n         *                       *"
-				+   "\n         *        *              *"
-				+   "\n        *                        *"
-				+   "\n        *         *        *     *";
-		frames[15] = "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n"
-				+   "\n            *   *"
-				+   "\n        *     *     *         '    '"
-				+   "\n       *   *  *  *   *    '  '      '  '"
-				+   "\n      *  *   * *   *  *  __/\\__'   '   '   '"
-				+   "\n      *  *   * *   *  * ' >##<    -    :   '"
-				+   "\n       *   *  *  *   *  '*|/\\|   .   '    '"
-				+   "\n        *     *     *  ** *\\ /* /*       ."
-				+   "\n            *   *     *\\  * ' *  /* '  ."
-				+   "\n                *   ** * >  X  < * *"
-				+   "\n                   * * /  * . *  \\ *"
-				+   "\n                 *    *  / / \\ \\  *"
-				+   "\n                *       * * * * *"
-				+   "\n               * *             *"
-				+   "\n              *                *"
-				+   "\n             *    *             *"
-				+   "\n            *                   *"
-				+   "\n           *      *             *"
-				+   "\n          *                      *"
-				+   "\n          *       *              *"
-				+   "\n         *                       *"
-				+   "\n         *        *              *"
-				+   "\n        *                        *"
-				+   "\n        *         *              *";
-		frames[16] = "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n"
-				+   "\n            *   *          /\\"
-				+   "\n       *      *      *    /  \\'    '"
-				+   "\n      *    *  *  *    *  /    \\     '  '"
-				+   "\n     *   *   * *--------/      \\--------'   '"
-				+   "\n     *   *  *   *\\                    /   :   '"
-				+   "\n      *   *  * *  *\\                /  '    '"
-				+   "\n       *   *     *   >            <       ."
-				+   "\n           *  *  *  /     .''.     \\ /* '  ."
-				+   "\n                *  /   .-'  X '-.   \\*"
-				+   "\n                  / .-'/  * . *  '-. \\"
-				+   "\n                 *-'  *  / / \\ \\  * '-"
-				+   "\n                *       *       *"
-				+   "\n               * *        * * *"
-				+   "\n              *                 "
-				+   "\n             *    *             *"
-				+   "\n            *                    "
-				+   "\n           *      *             *"
-				+   "\n          *                       "
-				+   "\n          *       *              *"
-				+   "\n         *                        "
-				+   "\n         *        *              *"
-				+   "\n        *                         "
-				+   "\n        *         *              *";
-		frames[17] = "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n"
-				+   "\n                           /\\"
-				+   "\n                          /  \\"
-				+   "\n                         /    \\"
-				+   "\n                         /    \\"
-				+   "\n            *   *       /      \\"
-				+   "\n       *      *      * /        \\"
-				+   "\n      *    *  *  *    /          \\  '"
-				+   "\n  -------------------/            \\-------------------"
-				+   "\n   \\                                                /"
-				+   "\n     \\                                            /"
-				+   "\n       \\                                        /"
-				+   "\n         \\                                    /"
-				+   "\n           \\                                /"
-				+   "\n             \\                            /"
-				+   "\n              >                          <"
-				+   "\n             /                          \\"
-				+   "\n            /                            \\"
-				+   "\n           /             .--.             \\"
-				+   "\n           /          .-'    '-.          \\"
-				+   "\n          /        .-'          '-.        \\"
-				+   "\n         /      .-'             *  '-.      \\"
-				+   "\n         /   .-'                      '-.   \\"
-				+   "\n        / .-'     *              *       '-. \\"
-				+   "\n        ''                                   ''"
-				+   "\n         *                       *"
-				+   "\n                                  "
-				+   "\n        *         *              *";
-		frames[18] = "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n"
-				+   "\n                       /        \\"
-				+   "\n                      /          \\"
-				+   "\n                      /          \\"
-				+   "\n                     /            \\"
-				+   "\n                    /              \\"
-				+   "\n                   /                \\"
-				+   "\n                   /                \\"
-				+   "\n            *     /                  \\"
-				+   "\n       *      *  /                    \\"
-				+   "\n      *    *    /                      \\  '"
-				+   "\n---------------/                        \\---------------------"
-				+   "\n\n\n\n\n\n\n"
-				+   "\n                                                             /"
-				+   "\n                                                           /"
-				+   "\n                                                         /"
-				+   "\n\\                                                      /"
-				+   "\n  \\                                                  /"
-				+   "\n   >                                                <"
-				+   "\n  /                                                  \\"
-				+   "\n /                                                    \\"
-				+   "\n                                                       \\"
-				+   "\n                                                       \\"
-				+   "\n                                                        \\"
-				+   "\n                                                         \\";
-		frames[19] = "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n"
-				+   "\n            /                              \\"
-				+   "\n           /                                \\"
-				+   "\n          /                                  \\"
-				+   "\n         /                                    \\"
-				+   "\n        /                                      \\"
-				+   "\n        /                                      \\"
-				+   "\n       /                                        \\"
-				+   "\n      /                                          \\"
-				+   "\n     /                                            \\"
-				+   "\n    /                                              \\"
-				+   "\n---/                                                \\---------"
-				+   "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n";
-		frames[20] = "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n"
-				+    "\n                      You win!"
-				+    "\n                  Congratulations!"
-				+    "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n";
-		for (int i = 0; i < frames.length; i++) {
-			System.out.println(frames[i]);
-			Thread.sleep(300);
-		}
-	}
-
-	//    public void start(Stage primaryStage) throws IOException {
-	//	StackPane root = new StackPane();
-	//	Scene scene = new Scene(root);
-	//	stage = primaryStage;
-	//	Card card = new Card(1, 0);
-	//	pane = new Pane();
-	//	root.getChildren().add(pane);
-	//	primaryStage.setScene(scene);
-	//	primaryStage.setOnCloseRequest((WindowEvent we) -> {
-	//	    System.exit(0);
-	//	});
-	//	primaryStage.show();
-	//  }
-
 	public static void main(String[] args) {
 		Game game = new Game();
 		Scanner input = new Scanner(System.in);
-		System.out.println(" Welcome to my amazing solitaire player!");
-		System.out.println(" Enter a stack number 1-7 or \"s\" for the flip stack for your move's origin, then");
-		System.out.println(" enter a stack number 1-7 or \"u\" for a top stack for your move's destination.");
-		System.out.println(" Enter \"f\" to flip through the stack.");
-		System.out.println(" Enter \"quit\" at any time to give up.");
-		System.out.println(" Enter \"help\" at any time for a list of valid commands.");
-		while (! game.won()) {
-			System.out.println(game);
-			System.out.print(" Enter command: ");
-			String command = input.nextLine().toLowerCase();
-			Scanner c = new Scanner(command);
-			if (! c.hasNext()) {
-				continue; // don't crash if the user enters a blank command
-			}
-			String word = c.next(); // get the first portion of the command
-			if (! c.hasNext()) {
-				// deal with the one-word and invalid commands
-				if (word.equals("f")) {
-					game.flip();
-				} else if (word.equals("quit")) {
-					System.out.println(" Goodbye");
-					input.close();
-					System.exit(0); // lost/give up
-				} else if (word.equals("help")) {
-					System.out.println(" Enter a stack number 1-7 or \"s\" for the flip stack for your move's origin.");
-					System.out.println(" Then enter a stack number 1-7 or \"u\" for a top stack for your move's destination.");
-					System.out.println(" Enter \"f\" to flip through the stack.");
-					System.out.println(" Enter \"quit\" at any time to give up.");
-				} else {
-					System.out.println(" Enter a valid command.\n Enter \"help\" for a list of valid commands.");
+		if (args.length > 0 && args[0].equals("-h")) {
+			System.out.println(" This is a command line solitaire game. It lets you play solitaire on the command line.");
+			System.out.println(" Enter a stack number 1-7 or \"s\" for the flip stack for your move's origin, then enter a stack number 1-7 for your move's destination or \"u\" to put the card up. Enter \"f\" to flip through the stack. Enter \"quit\" at any time to give up.");
+			System.out.println(" Enter \"help\" at any time for a list of valid commands.");
+		} else {
+			while (! game.won()) {
+				System.out.println(game);
+				System.out.print(" Enter command: ");
+				String command = input.nextLine().toLowerCase();
+				Scanner c = new Scanner(command);
+				if (! c.hasNext()) {
+					System.out.println("Enter a command.");
+					continue; // don't crash if the user enters a blank command
 				}
-			} else {
-				// deal with all the valid two-word commands
-				String orig = word;
-				String dest = c.next();
+				String word = c.next(); // get the first portion of the command
+				String orig = null;  // will be initialized later
+				String dest = null;  // ^^
+				if (! c.hasNext()) {
+					// deal with the one-word and invalid commands
+					if (word.equals("f")) {
+						game.flip();
+						continue;  // skip the two-word commands
+					} else if (word.equals("quit")) {
+						System.out.println(" Goodbye");
+						input.close();
+						System.exit(0); // lost/give up
+					} else if (word.equals("help")) {
+						System.out.println(" Enter a stack number 1-7 or \"s\" for the flip stack for your move's origin, then enter a stack number 1-7 for your move's destination or \"u\" to put the card up. Enter \"f\" to flip through the stack. Enter \"quit\" at any time to give up.");
+						continue;  // skip the two-word commands
+					} else if (word.length() == 2) {  // if the user enters two valid characters without a space
+						orig = word.substring(0, 1);
+						dest = word.substring(1, 2);
+					} else {
+						System.out.println(" Enter a valid command.\n Enter \"help\" for a list of valid commands.");
+						continue;  // skip the two-word commands
+					}
+				}  // deal with all the valid two-word commands
+				if (orig == null && dest == null) {
+					orig = word;
+					dest = c.next();
+				}
 				// the only command without a number portion
 				if (orig.equals("s") && dest.equals("u")) {
 					try {
@@ -760,67 +309,64 @@ public class Game {
 					int to = 0;
 					int from = 0;
 					// get the pile numbers if they aren't stack or up
+					if (! orig.equals("s")) {
+						try {
+							from = Integer.parseInt(orig);
+							if (from < 1 || from > 7) {
+								System.out.println(" Enter pile numbers between 1 and 7.");
+								continue;
+							}
+						} catch (NumberFormatException e) {
+							System.out.println(" Enter a valid origin pile.");
+							continue;
+						}
+					}
 					if (! dest.equals("u")) {
 						try {
-    							to = Integer.parseInt(dest);
-    							if (to < 1 || to > 7) {
-    								System.out.println(" Enter pile numbers between 1 and 7.");
-    								continue;
-    							}
-    						} catch (NumberFormatException e) {
-    							System.out.println(" Enter a valid destination pile.");
-    							continue;
-    						}
-    					}
-    					if (! orig.equals("s")) {
-    						try {
-    							from = Integer.parseInt(orig);
-    							if (from < 1 || from > 7) {
-    								System.out.println(" Enter pile numbers between 1 and 7.");
-    								continue;
-    							}
-    						} catch (NumberFormatException e) {
-    							System.out.println(" Enter a valid origin pile.");
-    							continue;
-    						}
-    					}
-    					to--; // convert from pile number 1-7 to array index 0-6
-    					from--; // convert from pile number 1-7 to array index 0-6
-    					// moves involving either the top stacks or the flip stack
-    					if (orig.equals("s")) {
-    						try {
-    							game.move(to);
-    						} catch (IOException e) {
-    							System.out.println(e.getMessage());
-    						}
-    					} else if (dest.equals("u")) {
-    						try {
-    							game.up(from);
-    						} catch (IOException e) {
-    							System.out.println(e.getMessage());
-    						}
-    					} else { // moves from one pile to another
-    						try {
-    							game.move(from, to);
-    						} catch (IOException e) {
-    							System.out.println(e.getMessage());
-    						}
-    					}
-    				}
-    			}
-    			c.close();  // close the resource leak
-		}  // won
-		System.out.println(game);
-		//	System.out.println(" KS  KH  KD  KC      --  --");
-		try {
-			game.finish();
-		} catch (InterruptedException e) {
+							to = Integer.parseInt(dest);
+							if (to < 1 || to > 7) {
+								System.out.println(" Enter pile numbers between 1 and 7.");
+								continue;
+							}
+						} catch (NumberFormatException e) {
+							System.out.println(" Enter a valid destination pile.");
+							continue;
+						}
+					}
+					to--; // convert from pile number 1-7 to array index 0-6
+					from--; // convert from pile number 1-7 to array index 0-6
+					// moves involving either the top stacks or the flip stack
+					if (orig.equals("s")) {
+						try {
+							game.move(to);
+						} catch (IOException e) {
+							System.out.println(e.getMessage());
+						}
+					} else if (dest.equals("u")) {
+						try {
+							game.up(from);
+						} catch (IOException e) {
+							System.out.println(e.getMessage());
+						}
+					} else { // moves from one pile to another
+						try {
+							game.move(from, to);
+						} catch (IOException e) {
+							System.out.println(e.getMessage());
+						}
+					}
+				}
+				c.close();  // close the resource leak
+			}  // won
+			System.out.println(game);
+			//	System.out.println(" KS  KH  KD  KC      --  --");
+			try {
+				game.finish();
+			} catch (InterruptedException e) {
+			}
+			System.out.println("You win! Congratulations!\n\n");
+			input.close();
+			System.exit(0);
 		}
-		try {
-			game.celebrate();
-		} catch (InterruptedException e) {
-		}
-		input.close();
-		System.exit(0);
 	}
 }
