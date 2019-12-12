@@ -5,12 +5,12 @@ import java.util.Stack;
 
 public class Game {
 
-	ArrayList<Card>[] board;  // hold the seven piles of cards that make up the game
-	Stack<Card>[] top;    // the four finished stacks that go at the top
-	Deck deck;
-	Deck flip;  // the deck that cards are flipped to from the flip stack
-	//    Stage stage;
-	//    Pane pane;
+	private ArrayList<Card>[] board;  // hold the seven piles of cards that make up the game
+	private Stack<Card>[] top;    // the four finished stacks that go at the top
+	private Deck deck;
+	private Deck flip;  // the deck that cards are flipped to from the flip stack
+	private int height;  // the height of the printed game
+	private String[] error; // the error message for the most recent turn 
 
 	@SuppressWarnings("unchecked")
 	public Game() {
@@ -36,9 +36,12 @@ public class Game {
 			board[i].get(board[i].size()-1).flip();
 		}
 		flip = Deck.empty();
+		height = 9;
+		error = new String[0];
 	}
 
 	public String toString() {
+		int height = 0; // count the height every time
 		StringBuilder sb = new StringBuilder();
 		sb.append(" ");
 		for (Stack<Card> stack : top) {
@@ -59,6 +62,7 @@ public class Game {
 		} else {
 			sb.append("***\n\n ");
 		}
+		height += 2;
 		int i = 0;  // testing height of the piles
 		boolean done = false;  // while there are still piles this tall on the board
 		while (! done) {
@@ -75,14 +79,29 @@ public class Game {
 					}
 				}
 			}
+			if (i < error.length) {
+				sb.append(" " + error[i]);
+			}
 			i++;
 			sb.append("\n ");
+			height++;
 		}
-		while (i <= 6) {
+		while (i < 6) { // make every print at least 8 lines tall
 			sb.append("\n");
+			height++;
 			i++;
 		}
+		this.height = height + 1; // since toString() already has to count the height this is the easiest way to figure it out
+		this.error = new String[0]; // get rid of the old error once we've printed it once
 		return sb.toString();
+	}
+
+	public int getHeight() {
+		return height;
+	}
+	
+	public void setError(String e) {
+		error = e.split("\\n");
 	}
 
 	/*
@@ -244,6 +263,7 @@ public class Game {
 					done = false;  // done only if there are no more finished stacks
 					try {
 						up(i);
+						// TODO make it delete the previous print first
 						System.out.println(this);
 						Thread.sleep(500);
 					} catch (IOException e) {
@@ -262,13 +282,20 @@ public class Game {
 			System.out.println(" Enter a stack number 1-7 or \"s\" for the flip stack for your move's origin, then enter a stack number 1-7 for your move's destination or \"u\" to put the card up. Enter \"f\" to flip through the stack. Enter \"quit\" at any time to give up.");
 			System.out.println(" Enter \"help\" at any time for a list of valid commands.");
 		} else {
+			System.out.println(game);
+			System.out.println("Enter command:");
 			while (! game.won()) {
+				System.out.print("\033[2K"); // delete current line
+				for (int i = 0; i <= game.getHeight(); i++) {
+					System.out.print("\033[1A"); // move up one line
+					System.out.print("\033[2K"); // delete current line
+				}
 				System.out.println(game);
 				System.out.print(" Enter command: ");
 				String command = input.nextLine().toLowerCase();
 				Scanner c = new Scanner(command);
 				if (! c.hasNext()) {
-					System.out.println("Enter a command.");
+					game.setError("Enter a command.");
 					continue; // don't crash if the user enters a blank command
 				}
 				String word = c.next(); // get the first portion of the command
@@ -284,13 +311,17 @@ public class Game {
 						input.close();
 						System.exit(0); // lost/give up
 					} else if (word.equals("help")) {
-						System.out.println(" Enter a stack number 1-7 or \"s\" for the flip stack for your move's origin, then enter a stack number 1-7 for your move's destination or \"u\" to put the card up. Enter \"f\" to flip through the stack. Enter \"quit\" at any time to give up.");
+						game.setError("Enter a stack number 1-7 or \"s\" for the flip stack\n"
+									   + "for your move's origin, then enter a stack number\n"
+									   + "1-7 for your move's destination or \"u\" to put the\n"
+									   + "card up. Enter \"f\" to flip through the stack.\n"
+									   + "Enter \"quit\" at any time to give up.");
 						continue;  // skip the two-word commands
 					} else if (word.length() == 2) {  // if the user enters two valid characters without a space
 						orig = word.substring(0, 1);
 						dest = word.substring(1, 2);
 					} else {
-						System.out.println(" Enter a valid command.\n Enter \"help\" for a list of valid commands.");
+						game.setError("Enter a valid command.\nEnter \"help\" for a list of valid commands.");
 						continue;  // skip the two-word commands
 					}
 				}  // deal with all the valid two-word commands
@@ -303,7 +334,7 @@ public class Game {
 					try {
 						game.up();
 					} catch (IOException e) {
-						System.out.println(e.getMessage());
+						game.setError(e.getMessage());
 					}
 				} else {
 					int to = 0;
@@ -313,11 +344,11 @@ public class Game {
 						try {
 							from = Integer.parseInt(orig);
 							if (from < 1 || from > 7) {
-								System.out.println(" Enter pile numbers between 1 and 7.");
+								game.setError("Enter pile numbers between 1 and 7.");
 								continue;
 							}
 						} catch (NumberFormatException e) {
-							System.out.println(" Enter a valid origin pile.");
+							game.setError(" Enter a valid origin pile.");
 							continue;
 						}
 					}
@@ -325,11 +356,11 @@ public class Game {
 						try {
 							to = Integer.parseInt(dest);
 							if (to < 1 || to > 7) {
-								System.out.println(" Enter pile numbers between 1 and 7.");
+								game.setError(" Enter pile numbers between 1 and 7.");
 								continue;
 							}
 						} catch (NumberFormatException e) {
-							System.out.println(" Enter a valid destination pile.");
+							game.setError(" Enter a valid destination pile.");
 							continue;
 						}
 					}
@@ -340,23 +371,23 @@ public class Game {
 						try {
 							game.move(to);
 						} catch (IOException e) {
-							System.out.println(e.getMessage());
+							game.setError(e.getMessage());
 						}
 					} else if (dest.equals("u")) {
 						try {
 							game.up(from);
 						} catch (IOException e) {
-							System.out.println(e.getMessage());
+							game.setError(e.getMessage());
 						}
 					} else { // moves from one pile to another
 						try {
 							game.move(from, to);
 						} catch (IOException e) {
-							System.out.println(e.getMessage());
+							game.setError(e.getMessage());
 						}
 					}
 				}
-				c.close();  // close the resource leak
+				c.close();  // close the scanner on this turn's command
 			}  // won
 			System.out.println(game);
 			//	System.out.println(" KS  KH  KD  KC      --  --");
