@@ -10,7 +10,7 @@ public class Game {
 	private Deck deck;
 	private Deck flip;  // the deck that cards are flipped to from the flip stack
 	private int height;  // the height of the printed game
-	private String[] error; // the error message for the most recent turn 
+	private String[] error; // the error message for the most recent turn
 
 	@SuppressWarnings("unchecked")
 	public Game() {
@@ -44,6 +44,10 @@ public class Game {
 		int height = 0; // count the height every time
 		StringBuilder sb = new StringBuilder();
 		sb.append(" ");
+		sb.append("\033[2K"); // delete current line
+		for (int i = 0; i <= getHeight(); i++) {
+			sb.append("\033[1A\033[2K"); // move up one line, delete current line
+		}
 		for (Stack<Card> stack : top) {
 			if (stack.isEmpty()) {
 				sb.append("--  ");
@@ -282,14 +286,9 @@ public class Game {
 			System.out.println(" Enter a stack number 1-7 or \"s\" for the flip stack for your move's origin, then enter a stack number 1-7 for your move's destination or \"u\" to put the card up. Enter \"f\" to flip through the stack. Enter \"quit\" at any time to give up.");
 			System.out.println(" Enter \"help\" at any time for a list of valid commands.");
 		} else {
-			System.out.println(game);
+			System.out.println(game.toString().substring(93));
 			System.out.println("Enter command:");
 			while (! game.won()) {
-				System.out.print("\033[2K"); // delete current line
-				for (int i = 0; i <= game.getHeight(); i++) {
-					System.out.print("\033[1A"); // move up one line
-					System.out.print("\033[2K"); // delete current line
-				}
 				System.out.println(game);
 				System.out.print(" Enter command: ");
 				String command = input.nextLine().toLowerCase();
