@@ -14,3 +14,5 @@ stack. To flip through the flip stack, enter 'f'. To end the game, enter
 If the player enters an invalid command or a command for an invalid move, an 
 appropriate error message is displayed to the right of the board. This will
 disappear after the next move is made. 
+When all the cards are turned face-up and the flip stack is empty, the game
+finishes itself with a delay in between moves.
