@@ -15,7 +15,7 @@ public class Game {
 	@SuppressWarnings("unchecked")
 	public Game() {
 		deck = new Deck();
-		deck.shuffle();
+//		deck.shuffle();
 
 		board = new ArrayList[7];  // the seven piles to be played from
 		for (int i = 0; i < 7; i++) {
@@ -267,9 +267,9 @@ public class Game {
 					done = false;  // done only if there are no more finished stacks
 					try {
 						up(i);
-						// TODO make it delete the previous print first
-						System.out.println(this);
+						System.out.println(this.toString().substring(8));
 						Thread.sleep(500);
+					// silence the compiler
 					} catch (IOException e) {
 						continue;
 					}
@@ -286,7 +286,7 @@ public class Game {
 			System.out.println(" Enter a stack number 1-7 or \"s\" for the flip stack for your move's origin, then enter a stack number 1-7 for your move's destination or \"u\" to put the card up. Enter \"f\" to flip through the stack. Enter \"quit\" at any time to give up.");
 			System.out.println(" Enter \"help\" at any time for a list of valid commands.");
 		} else {
-			System.out.println(game.toString().substring(93));
+			System.out.println(game.toString().substring(92));
 			System.out.println("Enter command:");
 			while (! game.won()) {
 				System.out.println(game);
