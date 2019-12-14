@@ -15,7 +15,7 @@ public class Game {
 	@SuppressWarnings("unchecked")
 	public Game() {
 		deck = new Deck();
-//		deck.shuffle();
+		deck.shuffle();
 
 		board = new ArrayList[7];  // the seven piles to be played from
 		for (int i = 0; i < 7; i++) {
