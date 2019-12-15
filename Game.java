@@ -307,6 +307,7 @@ public class Game {
 						continue;  // skip the two-word commands
 					} else if (word.equals("quit")) {
 						System.out.println(" Goodbye");
+						c.close();
 						input.close();
 						System.exit(0); // lost/give up
 					} else if (word.equals("help")) {
@@ -389,7 +390,6 @@ public class Game {
 				c.close();  // close the scanner on this turn's command
 			}  // won
 			System.out.println(game);
-			//	System.out.println(" KS  KH  KD  KC      --  --");
 			try {
 				game.finish();
 			} catch (InterruptedException e) {
