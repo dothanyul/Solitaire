@@ -44,6 +44,7 @@ public class Game {
 		int height = 0; // count the height every time
 		StringBuilder sb = new StringBuilder();
 		sb.append(" ");
+		// go up the screen by the height of the previous turn
 		sb.append("\033[2K"); // delete current line
 		for (int i = 0; i <= getHeight(); i++) {
 			sb.append("\033[1A\033[2K"); // move up one line, delete current line
@@ -290,6 +291,9 @@ public class Game {
 			System.out.println("Enter command:");
 			while (! game.won()) {
 				System.out.println(game);
+				// put a blank line at the bottom
+				System.out.print("\n");
+				System.out.print("\033[1A");
 				System.out.print(" Enter command: ");
 				String command = input.nextLine().toLowerCase();
 				Scanner c = new Scanner(command);
