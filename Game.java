@@ -43,12 +43,15 @@ public class Game {
 	public String toString() {
 		int height = 0; // count the height every time
 		StringBuilder sb = new StringBuilder();
-		sb.append(" ");
 		// go up the screen by the height of the previous turn
 		sb.append("\033[2K"); // delete current line
 		for (int i = 0; i <= getHeight(); i++) {
 			sb.append("\033[1A\033[2K"); // move up one line, delete current line
 		}
+		// add some whitespace at the top to remove it from whatever else is going on
+		sb.append("\n\n\n\n");
+		height += 4;
+		sb.append(" ");
 		for (Stack<Card> stack : top) {
 			if (stack.isEmpty()) {
 				sb.append("--  ");
@@ -223,7 +226,7 @@ public class Game {
 	/*
 	 * flip the top three cards off the flip stack
 	 * or the remainder of the stack if there aren't three cards left
-	 * or turn the stack over first if it's completely exhausted
+	 * or turn the stack over if it's completely exhausted
 	 */
 	public void flip() {
 		if (deck.isEmpty()) {
@@ -287,7 +290,8 @@ public class Game {
 			System.out.println(" Enter a stack number 1-7 or \"s\" for the flip stack for your move's origin, then enter a stack number 1-7 for your move's destination or \"u\" to put the card up. Enter \"f\" to flip through the stack. Enter \"quit\" at any time to give up.");
 			System.out.println(" Enter \"help\" at any time for a list of valid commands.");
 		} else {
-			System.out.println(game.toString().substring(92));
+			// have something for the deletion to delete because it's easier this way
+			System.out.println(" -- \n \n *** \n *** \n *** \n *** \n *** \n *** \n AS");
 			System.out.println("Enter command:");
 			while (! game.won()) {
 				System.out.println(game);
@@ -310,8 +314,13 @@ public class Game {
 						game.flip();
 						continue;  // skip the two-word commands
 					} else if (word.equals("quit")) {
-						System.out.println(" Goodbye");
+						// get rid of the lost game
+						System.out.print("\033[2K");
+						for (int i = 0; i < game.getHeight(); i++) {
+							System.out.print("\033[1A\033[2K");
+						}
 						input.close();
+						System.out.println("\033[1ALost");
 						System.exit(0); // lost/give up
 					} else if (word.equals("help")) {
 						game.setError("Enter a stack number 1-7 or \"s\" for the flip stack\n"
