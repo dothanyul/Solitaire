@@ -11,6 +11,7 @@ public class Game {
 	private Deck flip;  // the deck that cards are flipped to from the flip stack
 	private int height;  // the height of the printed game
 	private String[] error; // the error message for the most recent turn
+  private int turns;  // how many turns the user takes
 
 	@SuppressWarnings("unchecked")
 	public Game() {
@@ -37,6 +38,7 @@ public class Game {
 		}
 		flip = Deck.empty();
 		height = 9;
+    turns = 0;
 		error = new String[0];
 	}
 
@@ -107,7 +109,11 @@ public class Game {
 	public int getHeight() {
 		return height;
 	}
-	
+
+	public int getTurns() {
+    return turns;
+  }
+
 	public void setError(String e) {
 		error = e.split("\\n");
 	}
@@ -126,6 +132,7 @@ public class Game {
 			if (! board[stackNum].isEmpty() && ! board[stackNum].get(board[stackNum].size()-1).faceUp()) {
 				board[stackNum].get(board[stackNum].size()-1).flip();  // flip over the card underneath it
 			}
+      turns++;
 		} else if (top[card.suit()].isEmpty()) {
 			throw new IOException(" Top stacks must start with aces.");
 		} else if (top[card.suit()].peek().number() == card.number()-1) {  // if the stack this card needs to go on has the correct previous card already on it
@@ -134,6 +141,7 @@ public class Game {
 			if (! board[stackNum].isEmpty() && ! board[stackNum].get(board[stackNum].size()-1).faceUp()) {
 				board[stackNum].get(board[stackNum].size()-1).flip();  // flip over the card underneath it
 			}
+      turns++;
 		} else {
 			throw new IOException(" Cards in top stacks must be in sequence.");
 		}
@@ -151,12 +159,14 @@ public class Game {
 			top[card.suit()].push(card);  // put it up
 			card.flip();  // it was flipping over for some reason
 			flip.top();  // take the card off the flip stack
+      turns++;
 		} else if (top[card.suit()].isEmpty()) {
 			throw new IOException(" Top stacks must start with aces.");
 		} else if (top[card.suit()].peek().number() == card.number()-1) {  // if the stack this card needs to go on has the correct previous card already on it
 			top[card.suit()].push(card);  // put it up
 			card.flip();  // it was flipping over for some reason
 			flip.top();  // take the card off the flip stack
+      turns++;
 		} else {
 			throw new IOException(" Cards in top stacks must be in sequence.");
 		}
@@ -195,6 +205,7 @@ public class Game {
 		if (! board[from].isEmpty()) {  // flip over the card we just uncovered but only if it's there
 			board[from].get(board[from].size()-1).flip();
 		}
+    turns++;
 	}
 
 	/*
@@ -221,6 +232,7 @@ public class Game {
 		} // at this point the move is legal
 		board[to].add(flip.top());
 		board[to].get(board[to].size()-1).flip();
+    turns++;
 	}
 
 	/*
@@ -242,6 +254,7 @@ public class Game {
 				flip.add(deck.top());
 			}
 		}
+    turns++;
 	}
 
 	/*
@@ -320,7 +333,7 @@ public class Game {
 							System.out.print("\033[1A\033[2K");
 						}
 						input.close();
-						System.out.println("\033[1ALost");
+						System.out.println("\033[1ALost after " + Integer.toString(game.getTurns()) + " turns");
 						System.exit(0); // lost/give up
 					} else if (word.equals("help")) {
 						game.setError("Enter a stack number 1-7 or \"s\" for the flip stack\n"
