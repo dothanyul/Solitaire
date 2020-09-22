@@ -41,16 +41,16 @@ public class Card {
     	}
     	switch (suit) {
     	case 0:
-    	    ret = WHITE_BKG + BLACK_TXT + ret + "S";
+    	    ret = WHITE_BKG + BLACK_TXT + "\u2660" + ret;
     	    break;
     	case 1:
-    	    ret = WHITE_BKG + RED_TXT + ret + "H";
+    	    ret = WHITE_BKG + RED_TXT + "\u2665" + ret;
     	    break;
     	case 2:
-    	    ret = WHITE_BKG + RED_TXT + ret + "D";
+    	    ret = WHITE_BKG + RED_TXT + "\u2666" + ret;
     	    break;
     	case 3:
-    	    ret = WHITE_BKG + BLACK_TXT + ret + "C";
+    	    ret = WHITE_BKG + BLACK_TXT + "\u2663" + ret;
     	    break;
     	}
         if (num != 10) ret += " ";
