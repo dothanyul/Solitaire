@@ -312,7 +312,16 @@ public class Solitaire {
 				System.out.print("\n");
 				System.out.print("\033[1A");
 				System.out.print(" Enter command: ");
-				String command = input.nextLine().toLowerCase();
+                // catch EOF given in command
+                String command;
+                if (input.hasNext()) {
+				    command = input.nextLine().toLowerCase();
+                } else {
+                    game.setError("Enter \"quit\" to end game.");
+                    System.out.print("\n");
+                    input = new Scanner(System.in);
+                    continue;
+                }
 				Scanner c = new Scanner(command);
 				if (! c.hasNext()) {
 					game.setError("Enter a command.");
